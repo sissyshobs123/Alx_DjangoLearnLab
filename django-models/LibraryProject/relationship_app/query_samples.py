@@ -1,28 +1,16 @@
-import os
-import sys
-import django
+# relationship_app/query_samples.py
 
-# Add the Django project root directory to the path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from relationship_app.models import Author, Book, Library, Librarian
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
-django.setup()
+# Query all books by a specific author
+def get_books_by_author(author_name):
+    return Book.objects.filter(author__name=author_name)
 
-from relationship_app.models import Department, Employee, Project, Profile
-from django.contrib.auth.models import User
+# List all books in a library
+def get_books_in_library(library_name):
+    library = Library.objects.get(name=library_name)
+    return library.books.all()
 
-# Create a department
-dept = Department.objects.create(name="Engineering")
-
-# Create an employee
-emp = Employee.objects.create(name="Blessing Malik", department=dept)
-
-# Create a project and assign employees
-project = Project.objects.create(name="Django Revamp")
-project.employees.add(emp)
-
-# Create a user and profile
-user = User.objects.create_user(username="blessing", password="admin123")
-profile = Profile.objects.create(user=user, bio="Full-stack Django Developer")
-
-print("Sample data created successfully.")
+# Retrieve the librarian for a library
+def get_librarian_for_library(library_name):
+    return Librarian.objects.get(library__name=library_name)
