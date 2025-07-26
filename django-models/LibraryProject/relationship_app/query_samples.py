@@ -18,3 +18,12 @@ books_in_library = library.books.all()
 # Optional print for debugging
 for book in books_in_library:
     print(f"In Library: {book}")
+
+from relationship_app.models import Library, Librarian
+
+# Example: Retrieve the librarian for a specific library
+library_name = "Central Library"  # Replace with the actual library name
+librarian = Librarian.objects.get(library__name=library_name)
+
+# Print result (optional)
+print(librarian)
