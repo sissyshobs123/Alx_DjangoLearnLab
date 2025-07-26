@@ -1,4 +1,4 @@
-from relationship_app.models import Author, Book, Library
+from relationship_app.models import Author, Book, Library, Librarian
 
 # --- Query all books by a specific author ---
 author_name = "CharField"  # Replace with actual author name
@@ -19,11 +19,9 @@ books_in_library = library.books.all()
 for book in books_in_library:
     print(f"In Library: {book}")
 
-from relationship_app.models import Library, Librarian
 
-# Example: Retrieve the librarian for a specific library
-library_name = "Central Library"  # Replace with the actual library name
+# --- Retrieve the librarian for a library ---
 librarian = Librarian.objects.get(library__name=library_name)
 
-# Print result (optional)
-print(librarian)
+# Optional print for debugging
+print(f"Librarian: {librarian}")
