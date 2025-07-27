@@ -60,3 +60,19 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
+
+from django.http import HttpResponseForbidden
+from .models import UserProfile
+
+def admin_dashboard(request):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden("Login required.")
+
+    try:
+        profile = request.user.userprofile
+        if profile.role != 'Admin':
+            return HttpResponseForbidden("Admins only.")
+    except UserProfile.DoesNotExist:
+        return HttpResponseForbidden("Profile not found.")
+
+    return render(request, 'relationship_app/admin_dashboard.html')
