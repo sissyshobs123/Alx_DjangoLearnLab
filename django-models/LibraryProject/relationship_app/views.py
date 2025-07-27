@@ -1,4 +1,4 @@
-from .models import Book, Library
+from .models import Library
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseForbidden, HttpResponse
 from django.views.generic.detail import DetailView
 
-from .models import UserProfile
+from .models import Book, UserProfile
 
 # -------------------------------
 # Book and Library Views
