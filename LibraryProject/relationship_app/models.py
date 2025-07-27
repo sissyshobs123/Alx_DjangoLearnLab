@@ -9,15 +9,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class UserProfile(models.Model):
-    ROLE_CHOICES = [
-        ('Admin', 'Admin'),
-        ('Member', 'Member'),
-    ]
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-
-    def __str__(self):
-        return f"{self.user.username} - {self.role}"
+    user = models.OneToOneField(User, on_delete= models.CASCADE)
+    role = models.CharField(max_length=20, choices=[('admin','Admin'),('librarian','Librarian'),('member','Member')], default= 'member')
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
