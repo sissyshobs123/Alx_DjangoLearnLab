@@ -8,9 +8,21 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete= models.CASCADE)
-    role = models.CharField(max_length=20, choices=[('admin','Admin'),('librarian','Librarian'),('member','Member')], default= 'member')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(
+        max_length=20,
+        choices=[
+            ('Admin', 'Admin'),
+            ('Librarian', 'Librarian'),
+            ('Member', 'Member')
+        ],
+        default='Member'
+    )
+
+    def __str__(self):
+        return f"{self.user.username} - {self.role}"
 
 class Author(models.Model):
     name = models.CharField(max_length=100)
