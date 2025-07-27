@@ -1,39 +1,28 @@
-from django.shortcuts import render
-from .models import Book
-
-def list_books(request):
-    books = Book.objects.all()  # Use this version for the ALX checker
-    return render(request, 'relationship_app/list_books.html', {'books': books})
-
-from django.views.generic.detail import DetailView
-from .models import Library
-
-class LibraryDetailView(DetailView):
-    model = Library
-    template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library'
-
 from django.shortcuts import render, redirect
-from .models import Book
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponseForbidden, HttpResponse
 from django.views.generic.detail import DetailView
-from .models import Library
 
-# Existing view to list all books
+from .models import Book, Library, UserProfile
+
+# -------------------------------
+# Book and Library Views
+# -------------------------------
+
 def list_books(request):
-    books = Book.objects.all()  # Use this version for the ALX checker
+    books = Book.objects.all()  # Required by ALX checker
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# Existing class-based view for library details
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# ✅ NEW: Authentication views
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import UserCreationForm
-
+# -------------------------------
+# Authentication Views
+# -------------------------------
 
 def login_view(request):
     if request.method == 'POST':
@@ -61,18 +50,31 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-from django.http import HttpResponseForbidden
-from .models import UserProfile
+# -------------------------------
+# Role Check Helper Functions
+# -------------------------------
 
-def admin_dashboard(request):
-    if not request.user.is_authenticated:
-        return HttpResponseForbidden("Login required.")
+def is_admin(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
 
-    try:
-        profile = request.user.userprofile
-        if profile.role != 'Admin':
-            return HttpResponseForbidden("Admins only.")
-    except UserProfile.DoesNotExist:
-        return HttpResponseForbidden("Profile not found.")
+def is_librarian(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
-    return render(request, 'relationship_app/admin_dashboard.html')
+def is_member(user):
+    return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+# -------------------------------
+# Role-Based Views
+# -------------------------------
+
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
