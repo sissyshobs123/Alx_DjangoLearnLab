@@ -31,7 +31,9 @@ class LibraryDetailView(DetailView):
 
 # ✅ NEW: Authentication views
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
+
 
 def login_view(request):
     if request.method == 'POST':
