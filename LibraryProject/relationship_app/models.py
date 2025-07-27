@@ -11,7 +11,6 @@ from django.dispatch import receiver
 class UserProfile(models.Model):
     ROLE_CHOICES = [
         ('Admin', 'Admin'),
-        ('Librarian', 'Librarian'),
         ('Member', 'Member'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
