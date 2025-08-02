@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+AUTH_USER_MODEL = 'custom_user_app.CustomUser'
 
 from pathlib import Path
 
@@ -37,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'LibraryProject.bookshelf',
+    'bookshelf', 
     'custom_user_app',
 
 ]
@@ -128,4 +129,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'list_books'
 LOGOUT_REDIRECT_URL = 'login'
-AUTH_USER_MODEL = 'custom_user_app.CustomUser'
+
