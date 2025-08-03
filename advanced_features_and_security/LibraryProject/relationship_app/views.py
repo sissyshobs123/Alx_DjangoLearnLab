@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponseForbidden, HttpResponse
 from django.views.generic.detail import DetailView
-
+from django.contrib.auth.decorators import login_required
 from .models import Book, UserProfile
 
 # -------------------------------
@@ -107,6 +107,14 @@ def is_librarian(user):
 def is_member(user):
     return user.is_authenticated and hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
 
+def is_librarian(user):
+    return user.groups.filter(name="Librarians").exists()
+
+@login_required
+@user_passes_test(is_librarian)
+def librarian_dashboard(request):
+    return render(request, "relationship_app/librarian_dashboard.html")
+
 # -------------------------------
 # Role-Based Views
 # -------------------------------
@@ -122,3 +130,22 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
+
+
+@login_required
+def dashboard_redirect(request):
+    profile = UserProfile.objects.get(user=request.user)
+    if profile.role == 'librarian':
+        return redirect('librarian_dashboard')
+    elif profile.role == 'member':
+        return redirect('member_dashboard')
+    else:
+        return redirect('login')  # fallback
+
+@login_required
+def librarian_dashboard(request):
+    return render(request, 'relationship_app/librarian_dashboard.html')
+
+@login_required
+def member_dashboard(request):
+    return render(request, 'relationship_app/member_dashboard.html')

@@ -20,6 +20,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('', include('relationship_app.urls')),  
-    path('', include('django.contrib.auth.urls')),  
+    path('', include('LibraryProject.relationship_app.urls')),  
+    path('', include('django.contrib.auth.urls')), 
+    path('bookshelf/', include('LibraryProject.bookshelf.urls')),
+    path('', include('LibraryProject.bookshelf.urls')),
+ 
 ]
