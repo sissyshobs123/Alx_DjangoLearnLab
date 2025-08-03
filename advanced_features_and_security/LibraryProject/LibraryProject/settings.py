@@ -77,6 +77,23 @@ CONTENT_SECURITY_POLICY = {
     }
 }
 
+# Enforce HTTPS redirect
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP to HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Secure cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Security headers
+X_FRAME_OPTIONS = "DENY"  # Prevent clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME-type sniffing
+SECURE_BROWSER_XSS_FILTER = True  # Enable browser's XSS filter
+
 
 ROOT_URLCONF = 'LibraryProject.LibraryProject.urls'
 
