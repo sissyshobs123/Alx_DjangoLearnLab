@@ -4,8 +4,8 @@ from django.contrib.auth.admin import UserAdmin
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'publication_year')  # Show in list view
-    list_filter = ('publication_year',)                     # Filter by year
+    list_display = ('title', 'author', )  # Show in list view
+    list_filter = ('author',)                     # Filter by year
     search_fields = ('title', 'author')                     # Search by title or author
 
 class CustomUserAdmin(UserAdmin):
