@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponse
 from .models import Book
+from .forms import ExampleForm
+
 
 def is_editor(user):
     return user.groups.filter(name='Editors').exists()
