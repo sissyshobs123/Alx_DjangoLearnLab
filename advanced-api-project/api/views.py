@@ -3,9 +3,9 @@ Views for managing Book API endpoints using Django REST Framework.
 Includes both read-only and write operations, with appropriate permissions applied.
 """
 
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
-
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book
 from .serializers import BookSerializer
 import logging
@@ -14,14 +14,31 @@ logger = logging.getLogger(__name__)
 
 class BookListView(generics.ListAPIView):
     """
-    Retrieve a list of all books in the system.
+    Retrieve a list of all books in the system with filtering, searching, and ordering.
     - Method: GET
-    - Permissions: Public (no authentication required)
+    - Permissions: Public (read-only)
+    - Filtering: filter by title, author, publication_year
+    - Searching: search in title and author's name
+    - Ordering: order by title or publication_year
+    Example:
+        /api/books/?search=Python
+        /api/books/?ordering=title
+        /api/books/?title=SomeTitle
     """
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]  # Public read access
+    permission_classes = [permissions.AllowAny]
 
+    # Add filtering/searching/ordering
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter
+    ]
+    filterset_fields = ['title', 'author', 'publication_year']
+    search_fields = ['title', 'author__name']
+    ordering_fields = ['title', 'publication_year']
+    ordering = ['title']  # default ordering
 
 class BookDetailView(generics.RetrieveAPIView):
     """
