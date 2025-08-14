@@ -1,6 +1,14 @@
 from django.urls import path
 from . import views
-from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+from .views import (
+    PostListView,
+    PostDetailView,
+    PostCreateView,
+    PostUpdateView,
+    PostDeleteView,
+    CommentUpdateView,
+    CommentDeleteView
+)
 
 urlpatterns = [
     path('', PostListView.as_view(), name='home'),
@@ -13,10 +21,9 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('profile/', views.profile_view, name='profile'),
-    path('posts/<int:post_id>/comments/new/', views.add_comment, name='comment-add'),
-    path('comments/<int:pk>/edit/', views.CommentUpdateView.as_view(), name='comment-update'),
-    path('comments/<int:pk>/delete/', views.CommentDeleteView.as_view(), name='comment-delete'),
-    path('posts/<int:post_id>/comments/new/', views.CommentCreateView.as_view(), name='comment-add'),
 
-
+    # Comment URLs
+    path('post/<int:post_id>/comments/new/', views.add_comment, name='comment-add'),
+    path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
+    path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
 ]
