@@ -156,3 +156,16 @@ class CommentDeleteView(DeleteView):
             messages.error(request, "You are not allowed to delete this comment.")
             return redirect('post-detail', pk=comment.post.pk)
         return super().dispatch(request, *args, **kwargs)
+    
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/add_comment.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs['post_id']
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post-detail', kwargs={'pk': self.kwargs['post_id']})
