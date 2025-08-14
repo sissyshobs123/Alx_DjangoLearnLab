@@ -26,6 +26,19 @@ def search_posts(request):
         ).distinct()
     return render(request, 'blog/search_results.html', {'results': results, 'query': query})
 
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/posts_by_tag.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        self.tag = get_object_or_404(Tag, slug=self.kwargs['tag_slug'])
+        return Post.objects.filter(tags__slug=self.tag.slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
 
 def posts_by_tag(request, tag_slug):
     # Get the Tag object, or return 404 if not found
