@@ -1,16 +1,14 @@
 {% extends 'blog/base.html' %}
-
-{% block title %}Blog Posts{% endblock %}
-
+{% block title %}All Posts{% endblock %}
 {% block content %}
-<h1>All Blog Posts</h1>
-
-<p>Welcome to the blog posts page! This is a placeholder for your future blog post listings.</p>
-
-<!-- Example placeholder list -->
-<ul>
-    <li>Post 1 - Coming soon</li>
-    <li>Post 2 - Coming soon</li>
-    <li>Post 3 - Coming soon</li>
-</ul>
+<h1>Blog Posts</h1>
+{% for post in posts %}
+    <div>
+        <h2><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+        <p>By {{ post.author.username }} on {{ post.published_date|date:"M d, Y" }}</p>
+        <p>{{ post.content|truncatechars:100 }}</p>
+    </div>
+{% empty %}
+    <p>No posts available.</p>
+{% endfor %}
 {% endblock %}
