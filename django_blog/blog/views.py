@@ -113,8 +113,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 
 @login_required
-def add_comment(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -123,7 +123,7 @@ def add_comment(request, post_id):
             comment.author = request.user
             comment.save()
             messages.success(request, "Comment added successfully!")
-            return redirect('post-detail', pk=post_id)
+            return redirect('post-detail', pk=pk)
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment.html', {'form': form, 'post': post})
