@@ -4,6 +4,7 @@ Includes both read-only and write operations, with appropriate permissions appli
 """
 
 from rest_framework import generics, permissions, filters
+from django_filters import rest_framework as filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Book
