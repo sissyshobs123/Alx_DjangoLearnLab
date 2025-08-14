@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
+from taggit.models import Tag
+from django.shortcuts import  redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm, PostForm
@@ -10,6 +11,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Comment
 from .forms import CommentForm
 from django.urls import reverse_lazy
+
+
+from django.db.models import Q
+
+def search_posts(request):
+    query = request.GET.get('q')
+    results = []
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+
+
+def posts_by_tag(request, tag_slug):
+    # Get the Tag object, or return 404 if not found
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    
+    # Filter posts that have this tag
+    posts = Post.objects.filter(tags__slug=tag_slug)
+    
+    # Render a template with the filtered posts and tag info
+    return render(request, 'blog/posts_by_tag.html', {'posts': posts, 'tag': tag})
+
 
 def home_view(request):
     return render(request, 'blog/home.html')
