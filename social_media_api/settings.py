@@ -20,7 +20,12 @@ ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 #ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if not DEBUG else ["*"]
 
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if not DEBUG else []
+#CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if not DEBUG else []
+CSRF_TRUSTED_ORIGINS = [
+    "https://social-media-api-12345.herokuapp.com",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
