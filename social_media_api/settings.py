@@ -16,7 +16,7 @@ import dj_database_url
 
 DEBUG = False
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
-ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
+# ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
 #DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 #ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if not DEBUG else ["*"]
