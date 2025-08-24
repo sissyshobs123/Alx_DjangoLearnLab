@@ -20,11 +20,16 @@ import dj_database_url
 
 DEBUG = False
 <<<<<<< HEAD:social_media_api/settings.py
+<<<<<<< HEAD:social_media_api/settings.py
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 # ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
 =======
 ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
 >>>>>>> 535ee0d (Configure settings for Heroku deployment):social_media_api/social_media_api/settings.py
+=======
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
+>>>>>>> 139bc2d (Update settings.py for production and add Python version file):social_media_api/social_media_api/settings.py
 #DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 #ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if not DEBUG else ["*"]
