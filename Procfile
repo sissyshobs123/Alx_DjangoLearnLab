@@ -1,1 +1,1 @@
-web: gunicorn social_media_api.wsgi
+web: gunicorn advanced_api_project.wsgi
