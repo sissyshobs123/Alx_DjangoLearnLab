@@ -9,27 +9,15 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-<<<<<<< HEAD:social_media_api/settings.py
+
 
 import os
-=======
-import os 
->>>>>>> d04bb1d (Add STATIC_ROOT and WhiteNoise settings for Heroku):advanced-api-project/advanced_api_project/settings.py
 from pathlib import Path
 import dj_database_url
 
 DEBUG = False
-<<<<<<< HEAD:social_media_api/settings.py
-<<<<<<< HEAD:social_media_api/settings.py
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 # ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
-=======
-ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
->>>>>>> 535ee0d (Configure settings for Heroku deployment):social_media_api/social_media_api/settings.py
-=======
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
-# ALLOWED_HOSTS = ["boiling-brushlands-77736-e0e120602e0e.herokuapp.com"]
->>>>>>> 139bc2d (Update settings.py for production and add Python version file):social_media_api/social_media_api/settings.py
 #DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me")
 #ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",") if not DEBUG else ["*"]
@@ -168,7 +156,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-<<<<<<< HEAD:social_media_api/settings.py
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 REST_FRAMEWORK = {
@@ -194,7 +181,7 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = "DENY"
-=======
+
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
@@ -203,4 +190,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
->>>>>>> d04bb1d (Add STATIC_ROOT and WhiteNoise settings for Heroku):advanced-api-project/advanced_api_project/settings.py
+
